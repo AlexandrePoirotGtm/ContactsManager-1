@@ -7,23 +7,20 @@ namespace ContactsManager.DAL
 {
     public class DonneesContact : IDonneesContact
     {
-        const string CheminFichier = "Contacts.txt";
+        const string CheminFichier = @"C:\Temp\Contacts.txt";
         const char SeparateurChamps = ';';
 
         private List<Contact> contacts;
 
         public IEnumerable<Contact> GetListe()
         {
-            if (this.contacts == null)
-            {
-                LireFichier();
-            }
-
+            InitialiserListe();
             return this.contacts;
         }
 
         public void Enregistrer(Contact contact)
         {
+            InitialiserListe();
             if (!this.contacts.Contains(contact))
             {
                 this.contacts.Add(contact);
@@ -34,8 +31,17 @@ namespace ContactsManager.DAL
 
         public void Supprimer(Contact contact)
         {
+            InitialiserListe();
             this.contacts.Remove(contact);
             this.EcrireFichier();
+        }
+
+        private void InitialiserListe()
+        {
+            if (this.contacts == null)
+            {
+                LireFichier();
+            }
         }
 
         private void LireFichier()

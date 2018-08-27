@@ -11,7 +11,7 @@ namespace ContactsManager.Business
 
         public ServiceContact()
         {
-            this.donnees = new DonneesContact();
+            this.donnees = new DonneesContactFichier();
         }
 
         public void CreerContact(Contact contact)

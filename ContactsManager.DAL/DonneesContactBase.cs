@@ -43,8 +43,8 @@ namespace ContactsManager.DAL
                     contact.Prenom = reader.GetString(reader.GetOrdinal("Prenom"));
                     contact.Email = reader.GetNullableString(reader.GetOrdinal("Email"));
                     contact.Telephone = reader.GetNullableString(reader.GetOrdinal("Telephone"));
-                    contact.DateNaissance = reader.IsDBNull(indexColonneDateNaissance) 
-                                                ? (DateTime?)null 
+                    contact.DateNaissance = reader.IsDBNull(indexColonneDateNaissance)
+                                                ? (DateTime?)null
                                                 : reader.GetDateTime(indexColonneDateNaissance);
 
                     listeContacts.Add(contact);
@@ -56,7 +56,15 @@ namespace ContactsManager.DAL
 
         public void Supprimer(Contact contact)
         {
-            throw new NotImplementedException();
+            using (var connexion = CreerConnexion())
+            {
+                connexion.Open();
+
+                var commande = connexion.CreateCommand();
+                commande.CommandText = "DELETE Contacts WHERE Id = @IdContact";
+                commande.Parameters.AddWithValue("@IdContact", contact.Id);
+                commande.ExecuteNonQuery();
+            }
         }
 
         private void Ajouter(Contact contact)

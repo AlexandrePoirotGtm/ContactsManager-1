@@ -30,5 +30,31 @@ namespace ContactsManager.DAL
                            ? (string)null
                            : reader.GetString(indexColonne);
         }
+
+        /// <summary>
+        /// Méthode d'extension qui renvoie DBNull quand la valeur
+        /// fournie est nulle ou vide.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static object NullIfNotSet(this string value)
+        {
+            return string.IsNullOrEmpty(value)
+                ? DBNull.Value
+                : (object)value;
+        }
+
+        /// <summary>
+        /// Méthode d'extension qui renvoie DBNull quand la valeur
+        /// fournie est nulle.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static object NullIfNotSet(this DateTime? value)
+        {
+            return value == null
+                ? DBNull.Value
+                : (object)value;
+        }
     }
 }

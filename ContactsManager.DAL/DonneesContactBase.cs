@@ -69,10 +69,43 @@ namespace ContactsManager.DAL
 
         private void Ajouter(Contact contact)
         {
+            using (var connexion = CreerConnexion())
+            {
+                connexion.Open();
+
+                var commande = connexion.CreateCommand();
+                commande.CommandText =
+                    @"INSERT INTO Contacts (Nom, Prenom, Email, Telephone, DateNaissance)
+                        VALUES (@Nom, @Prenom, @Email, @Telephone, @DateNaissance)";
+                commande.Parameters.AddWithValue("@Nom", contact.Nom);
+                commande.Parameters.AddWithValue("@Prenom", contact.Prenom);
+                commande.Parameters.AddWithValue("@Email", contact.Email.NullIfNotSet());
+                commande.Parameters.AddWithValue("@Telephone", contact.Telephone.NullIfNotSet());
+                commande.Parameters.AddWithValue("@DateNaissance", contact.DateNaissance.NullIfNotSet());
+                commande.ExecuteNonQuery();
+            }
         }
 
         private void Modifier(Contact contact)
         {
+            using (var connexion = CreerConnexion())
+            {
+                connexion.Open();
+
+                var commande = connexion.CreateCommand();
+                commande.CommandText =
+                    @"UPDATE Contacts SET Nom = @Nom, Prenom = @Prenom, 
+                                          Email = @Email, Telephone = @Telephone,
+                                          DateNaissance = @DateNaissance
+                      WHERE Id = @Id";
+                commande.Parameters.AddWithValue("@Id", contact.Id);
+                commande.Parameters.AddWithValue("@Nom", contact.Nom);
+                commande.Parameters.AddWithValue("@Prenom", contact.Prenom);
+                commande.Parameters.AddWithValue("@Email", contact.Email.NullIfNotSet());
+                commande.Parameters.AddWithValue("@Telephone", contact.Telephone.NullIfNotSet());
+                commande.Parameters.AddWithValue("@DateNaissance", contact.DateNaissance.NullIfNotSet());
+                commande.ExecuteNonQuery();
+            }
         }
 
         private SqlConnection CreerConnexion()

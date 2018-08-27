@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ContactsManager.DAL
 {
-    public class DonneesContact : IDonneesContact
+    public class DonneesContactFichier : IDonneesContact
     {
         const string CheminFichier = @"C:\Temp\Contacts.txt";
         const char SeparateurChamps = ';';

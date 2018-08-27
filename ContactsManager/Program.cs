@@ -164,7 +164,7 @@ namespace ContactsManager.Application
             Console.Clear();
             Console.WriteLine("SUPPRESSION D'UN CONTACT\n");
 
-            Console.Write("{0,-6} | ", "NUMERO");
+            Console.Write("{0,-6} | ", "ID");
             Console.Write("{0,-10} | ", "NOM");
             Console.Write("{0,-10} | ", "PRENOM");
             Console.WriteLine();
@@ -173,28 +173,27 @@ namespace ContactsManager.Application
             var listeContacts = service.GetContacts();
 
             Console.ForegroundColor = ConsoleColor.Yellow;
-            for (var i = 0; i < listeContacts.Count(); i++)
+            foreach (var contact in listeContacts)
             {
-                var contact = listeContacts.ElementAt(i);
-                Console.Write("{0,-6} | ", i);
+                Console.Write("{0,-6} | ", contact.Id);
                 Console.Write("{0,-10} | ", contact.Nom);
                 Console.Write("{0,-10} | ", contact.Prenom);
                 Console.WriteLine();
             }
             Console.ResetColor();
 
-            Console.Write("Entre le numéro du contact à supprimer: ");
-            var index = int.Parse(Console.ReadLine());
+            Console.Write("Entre l'id du contact à supprimer: ");
+            var idContact = int.Parse(Console.ReadLine());
 
-            if (index < listeContacts.Count())
+            if (listeContacts.Any(x => x.Id == idContact))
             {
-                var contact = listeContacts.ElementAt(index);
+                var contact = listeContacts.Single(x => x.Id == idContact);
                 service.SupprimerContact(contact);
                 OutilsConsole.AfficherMessage("Contact supprimé !", ConsoleColor.Green);
             }
             else
             {
-                OutilsConsole.AfficherMessageErreur("Numéro invalide !");
+                OutilsConsole.AfficherMessageErreur("Id invalide !");
             }
 
             OutilsConsole.AfficherRetourMenu();

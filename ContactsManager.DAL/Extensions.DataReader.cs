@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.SqlClient;
+using System.Data;
 
 namespace ContactsManager.DAL
 {
@@ -11,7 +11,7 @@ namespace ContactsManager.DAL
         /// <param name="reader"></param>
         /// <param name="indexColonne"></param>
         /// <returns></returns>
-        public static DateTime? GetNullableDateTime(this SqlDataReader reader, int indexColonne)
+        public static DateTime? GetNullableDateTime(this IDataReader reader, int indexColonne)
         {
             return reader.IsDBNull(indexColonne)
                            ? (DateTime?)null
@@ -24,7 +24,7 @@ namespace ContactsManager.DAL
         /// <param name="reader"></param>
         /// <param name="indexColonne"></param>
         /// <returns></returns>
-        public static string GetNullableString(this SqlDataReader reader, int indexColonne)
+        public static string GetNullableString(this IDataReader reader, int indexColonne)
         {
             return reader.IsDBNull(indexColonne)
                            ? (string)null

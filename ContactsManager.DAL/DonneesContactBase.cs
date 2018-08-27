@@ -35,7 +35,7 @@ namespace ContactsManager.DAL
                 var reader = commande.ExecuteReader();
                 while (reader.Read())
                 {
-                    var indexColonneDateNaissance = reader.GetOrdinal("DateNaissance");
+                    var indexColonneDateNaissance = reader.GetOrdinal("DateDeNaissance");
 
                     var contact = new Contact();
                     contact.Id = reader.GetInt32(reader.GetOrdinal("Id"));

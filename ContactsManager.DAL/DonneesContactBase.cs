@@ -24,7 +24,34 @@ namespace ContactsManager.DAL
 
         public IEnumerable<Contact> GetListe()
         {
-            throw new NotImplementedException();
+            var listeContacts = new List<Contact>();
+
+            using (var connexion = CreerConnexion())
+            {
+                connexion.Open();
+
+                var commande = connexion.CreateCommand();
+                commande.CommandText = "SELECT * FROM Contacts";
+                var reader = commande.ExecuteReader();
+                while (reader.Read())
+                {
+                    var indexColonneDateNaissance = reader.GetOrdinal("DateNaissance");
+
+                    var contact = new Contact();
+                    contact.Id = reader.GetInt32(reader.GetOrdinal("Id"));
+                    contact.Nom = reader.GetString(reader.GetOrdinal("Nom"));
+                    contact.Prenom = reader.GetString(reader.GetOrdinal("Prenom"));
+                    contact.Email = reader.GetNullableString(reader.GetOrdinal("Email"));
+                    contact.Telephone = reader.GetNullableString(reader.GetOrdinal("Telephone"));
+                    contact.DateNaissance = reader.IsDBNull(indexColonneDateNaissance) 
+                                                ? (DateTime?)null 
+                                                : reader.GetDateTime(indexColonneDateNaissance);
+
+                    listeContacts.Add(contact);
+                }
+            }
+
+            return listeContacts;
         }
 
         public void Supprimer(Contact contact)

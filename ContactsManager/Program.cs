@@ -80,7 +80,7 @@ namespace ContactsManager.Application
             OutilsConsole.AfficherChamp("NOM", 10);
             OutilsConsole.AfficherChamp("PRENOM", 10);
             OutilsConsole.AfficherChamp("EMAIL", 20);
-            OutilsConsole.AfficherChamp("TELEPHONE", 10);
+            OutilsConsole.AfficherChamp("TELEPHONE", 15);
             OutilsConsole.AfficherChamp("DATE NAISSANCE", 10);
             Console.WriteLine();
             Console.WriteLine(new string('-', 75));
@@ -91,7 +91,7 @@ namespace ContactsManager.Application
                 OutilsConsole.AfficherChamp(contact.Nom, 10);
                 OutilsConsole.AfficherChamp(contact.Prenom, 10);
                 OutilsConsole.AfficherChamp(contact.Email, 20);
-                OutilsConsole.AfficherChamp(contact.Telephone, 10);
+                OutilsConsole.AfficherChamp(contact.Telephone, 15);
                 OutilsConsole.AfficherChamp(contact.DateNaissance?.ToShortDateString(), 10);
                 Console.WriteLine();
             }
